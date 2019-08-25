@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Whisprs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @whisprs.each do |whispr| %>
+      <tr>
+        <td><%= whispr.title %></td>
+        <td><%= whispr.description %></td>
+        <td><%= whispr.user_id %></td>
+        <td><%= link_to 'Show', whispr %></td>
+        <td><%= link_to 'Edit', edit_whispr_path(whispr) %></td>
+        <td><%= link_to 'Destroy', whispr, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

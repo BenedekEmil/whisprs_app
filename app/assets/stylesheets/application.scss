@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bulma";
+
+.header-image {
+  background-image: url(/app/assets/images/background.jpg) ;
+  background-position: center center;
+  background-repeat:  no-repeat;
+  background-attachment: fixed;
+  background-size:  cover;
+  background-color: #999;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
