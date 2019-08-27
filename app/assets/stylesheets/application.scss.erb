@@ -1,0 +1,127 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+$pink: #ea4c89;
+$pink-invert: #fff;
+
+$primary: $pink;
+$primary-invert: $pink-invert;
+$link: $primary;
+$link-hover: darken($primary, 20%);
+
+$panel-heading-background-color : hsl(0, 0%, 21%);
+
+@import "bulma";
+
+.gravatar-img {
+  border-radius: 75%;
+  img {
+    border-radius: 75%;
+  }
+}
+
+.control-label{
+  color: white !important; // some color
+}
+
+h2 {
+  color: white !important;
+}
+
+.hint {
+  color: white;
+}
+
+
+h3 {
+  color: white !important;
+}
+
+form {
+
+  .label{
+    color: white;
+
+
+    abbr {
+      color: white;
+    }
+
+    p {
+      color: white !important;
+    }
+  }
+  .checkbox {
+    color: white !important;
+  }
+}
+
+a {
+    color: white;
+}
+
+p {
+  color: white !important;
+}
+
+.profile-bg {
+  background-color: hsl(0, 0%, 21%);
+}
+
+.pink-bg {
+  background-color: #ea4c89;
+}
+
+.top-alligned {
+  padding-top: 10vh;
+}
+
+.panel-heading {
+  p {
+    background: transparent;
+  }
+}
+
+.sidebar {
+  height: 25vh;
+  padding-top: 10vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.panel {
+  border-color: hsl(0, 0%, 21%);
+}
+
+
+.has-bg-img {
+  background-image: url(image_path("background.jpg"));
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #464646;
+  height: 100%;
+}
+
+.has-navbar-img {
+  background-image: url(image_path("navbar.jpg"));
+}
+
+.notification:not(:last-child){
+  margin-bottom: 0;
+}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="has-navbar-fixed-top">
   <head>
     <title>WhisprsApp</title>
     <%= csrf_meta_tags %>
@@ -11,20 +11,11 @@
   </head>
 
   <body>
-    <% if flash[:notice] %>
-      <div class="notification is-primary global-notification">
-        <p class="notice"><%= notice %></p>
-      </div>
-    <% end %>
-    <% if flash[:alert] %>
-      <div class="notification is-danger global-notification">
-        <p class="alert"><%= notice %></p>
-      </div>
-    <% end %>
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
+    <nav class="navbar is-fixed-top is-dark is-bold" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand" style="position:relative">
         <%= link_to root_path, class:"navbar-item" do %>
-          <h1 class="title is-5 has-text-white">Whisprs</h1>
+          <span class="icon"><i class="fa fa-eercast" aria-hidden="true"></i></span>
+          <span class="title is-5 has-text-white">Whispr</span>
         <% end %>
         <div class="navbar-burger burger" data-target="navbar">
           <span></span>
@@ -34,22 +25,22 @@
       </div>
 
       <div id="navbar" class="navbar-menu">
-        <div class="navbar-start">
+        <div class="navbar-end">
           <div class="navbar-item">
             <div class="field is-grouped">
               <p class="control">
-                <%= link_to 'Whisprs', root_path, class:"button is-dark" %>
+                <%= link_to root_path, class:"button is-primary"  do%>
+                  <span>New Whispr</span>
+                  <span class="icon is-small"><i class="fa fa-upload"></i></span>
+                <% end %>
               </p>
             </div>
           </div>
-        </div>
-
-        <div class="navbar-end">
           <div class="navbar-item">
             <div class="field is-grouped">
               <% if user_signed_in? %>
                 <p class="control">
-                  <% link_to new_whispr_path, class:"button is-primary" do %>
+                  <% link_to new_whispr_path, class:"button is-dark" do %>
                     <span class="icon is-small"><i class="fa fa-upload"></i></span>
                     <span>New Whispr</span>
                   <% end %>
@@ -65,7 +56,7 @@
                   <%= link_to "Sign In", new_user_session_path, class:"button is-dark" %>
                 </p>
                 <p class="control">
-                  <%= link_to "Sign Out", new_user_registration_path, class:"button is-dark" %>
+                  <%= link_to "Sign Up", new_user_registration_path, class:"button is-dark" %>
                 </p>
               <% end %>
             </div>
@@ -73,9 +64,18 @@
         </div>
       </div>
     </nav>
-
-
-    <%= yield %>
-
+    <% if flash[:notice] %>
+      <div class="notification is-primary global-notification">
+        <p class="notice"><%= notice %></p>
+      </div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="notification is-danger global-notification">
+        <p class="alert"><%= notice %></p>
+      </div>
+    <% end %>
+    <div class="hero has-bg-img is-fullheight has-fixed-navbar">
+        <%= yield %>
+    </div>
   </body>
 </html>

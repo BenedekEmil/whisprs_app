@@ -1,10 +1,12 @@
 class WhisprsController < ApplicationController
   before_action :set_whispr, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /whisprs
   # GET /whisprs.json
   def index
-    @whisprs = Whispr.all
+    @whisprs = Whispr.all.order("created_at DESC")
+    @whispr = Whispr.new
   end
 
   # GET /whisprs/1
@@ -14,7 +16,7 @@ class WhisprsController < ApplicationController
 
   # GET /whisprs/new
   def new
-    @whispr = Whispr.new
+    @whispr = current_user.whisprs.build
   end
 
   # GET /whisprs/1/edit
@@ -24,11 +26,11 @@ class WhisprsController < ApplicationController
   # POST /whisprs
   # POST /whisprs.json
   def create
-    @whispr = Whispr.new(whispr_params)
+    @whispr = current_user.whisprs.build(whispr_params)
 
     respond_to do |format|
       if @whispr.save
-        format.html { redirect_to @whispr, notice: 'Whispr was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Whispr was successfully created.' }
         format.json { render :show, status: :created, location: @whispr }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class WhisprsController < ApplicationController
   def update
     respond_to do |format|
       if @whispr.update(whispr_params)
-        format.html { redirect_to @whispr, notice: 'Whispr was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Whispr was successfully updated.' }
         format.json { render :show, status: :ok, location: @whispr }
       else
         format.html { render :edit }
