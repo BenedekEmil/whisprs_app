@@ -12,7 +12,8 @@
           <div class="content">
             <p class="has-text-white">
               <strong class="has-text-white"><%= current_user.name %></strong><br />
-              <small>@<%= current_user.username %></small>
+              <small>@<%= current_user.username %></small><br />
+              <small class="has-text-white">Joined <%= time_ago_in_words(current_user.created_at) %> ago</small>
             </p>
           </div>
         </div>

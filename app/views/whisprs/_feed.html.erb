@@ -1,9 +1,9 @@
-<div class="column is-half top-alligned">
+<div class="column is-half top-alligned" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
   <% if user_signed_in? %>
     <article class="media box profile-bg">
       <figure class="media-left">
         <p class="gravatar-img is-32x32">
-          <%= gravatar_image_tag(current_user.email, size: 64, alt: current_user.name) %>
+          <%= gravatar_image_tag( current_user.email, size: 64, alt: current_user.name, gravatar: { size: 48 } ); %>
         </p>
       </figure>
       <div class="media-content ">
@@ -15,44 +15,104 @@
     <div class="box profile-bg">
       <article class="media aticle-custom">
         <div class="media-left">
-          <figure class="gravatar-img is-32x32">
-            <%= gravatar_image_tag(whispr.user.email, size: 64, alt: whispr.user.name) %>
+          <figure class="gravatar-img is-48x48">
+            <%= gravatar_image_tag(whispr.user.email, size: 64, alt: whispr.user.name, gravatar: { size: 58 }) %>
           </figure>
         </div>
         <div class="media-content">
           <div class="content">
             <div class="container">
-              <div class="columns">
-                <div class="column is-3">
-                  <strong class="has-text-white"><%= whispr.user.name %></strong><br/>
-                  <small class="has-text-white">@<%= whispr.user.username %></small><br/>
+              <div class="tile is-ancestor">
+                <div class="tile is-vertical is-4">
+                  <div class="tile is-parent is-vertical">
+                    <div class="tile is-child ">
+                      <strong class="has-text-white"><%= whispr.user.name %></strong><br/>
+                      <small class="has-text-white">@<%= whispr.user.username %></small><br/>
+                    </div>
+                  </div>
                 </div>
-                <div class="column is-6">
-                  <p class="is-capitalized has-text-centered">
-                    <strong class="has-text-white"><%= whispr.title %></strong>
-                  </p>
-                </div>
-                <div class="column is-1">
 
+                <div class="tile is-vertical is-6">
+                  <div class="tile is-parent is-vertical">
+                    <div class="tile is-child ">
+                      <small class="has-text-white is-size-7"> <%= time_ago_in_words(whispr.created_at) %> ago</small>
+                    </div>
+                  </div>
                 </div>
-                <div class="column is-2">
-                  <% if user_signed_in? && current_user.id == whispr.user_id %>
-                    <nav class="level">
-                      <div class="level-left is-mobile">
-                        <%= link_to edit_whispr_path(whispr), class: "level-item" do %>
-                          <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                        <% end %>
-                        <%= link_to whispr, class: "level-item", method: :delete, data: { confirm: "Are you sure you want to delete this whispr?" } do %>
-                          <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-                        <% end %>
-                      </div>
-                    </nav>
-                  <% end %>
+
+                <div class="tile is-vertical is-2">
+                  <div class="tile is-parent is-vertical">
+                    <div class="tile is-child ">
+                      <% if user_signed_in? && current_user.id == whispr.user_id %>
+                        <nav class="level">
+                          <div class="container"></div>
+                          <br class="level-left is-mobile">
+                          <%= link_to edit_whispr_path(whispr), class: "level-item" do %>
+                            <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                          <% end %>
+                          <%= link_to whispr, class: "level-item", method: :delete, data: { confirm: "Are you sure you want to delete this whispr?" } do %>
+                            <span class="icon"><i class="fa fa-trash-o has-text-danger" aria-hidden="true"></i></span>
+                          <% end %>
+                        </nav>
+                      <% end %>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div class="container">
+                <div class="tile is-ancestor">
+                  <div class="tile is-vertical is-4">
+                    <div class="tile is-parent is-vertical">
+                      <div class="tile is-child ">
+                        <p class="subtitle is-capitalized">
+                          <strong class="has-text-white"><%= whispr.title %></strong>
+                        </p>/<br>
+                        <% unless whispr.whispr_files.blank? %>
+                          <%= image_tag(whispr.whispr_files_url) %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tile is-vertical is-8">
+                    <div class="tile is-parent is-vertical">
+                      <div class="tile is-child ">
+                        <div class="container">
+                          <p class="has-text-white"><%= whispr.description %></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
-            <p class="has-text-white"><%= whispr.description %></p>
           </div>
+          <section class="coments">
+            <nav class="whispr-analytics">
+              <div class="level-left">
+                <div class="level-item comments data">
+                  <%= link_to whispr do %>
+                    <span class="icon"><i class="fa fa-comment"></i>   </span>
+                  <% end %>
+                  <small class="is-5 has-text-white"><%=pluralize(whispr.comments.count, 'Comment') %></small>
+                </div>
+                <div class="level-item likes">
+                  <span class="icon"><i class="fa fa-heart"></i></span>
+                  <span class="vote-count"></span>
+                </div>
+              </div>
+            </nav>
+            <%= render whispr.comments %>
+            <hr class="is-small"/>
+            <% if user_signed_in? %>
+              <p><small class="is-3 has-text-white">Leave a comment ...</small></p>
+              <%= render 'comments/form', whispr: whispr  %>
+            <% else %>
+              <div class="content">
+                <%= link_to 'Log In', new_user_session_path %> <small class="has-text-white">to leave a comment.</small>
+              </div>
+            <% end %>
+          </section>
         </div>
       </article>
     </div>

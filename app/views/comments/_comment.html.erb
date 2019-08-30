@@ -1,0 +1,46 @@
+<div class="profile-bg pad-top">
+  <article class="media">
+    <div class="media-left">
+      <figure class="media-left">
+        <p class="gravatar-img is-48x48 user-thumb">
+          <%= gravatar_image_tag(comment.user.email.gsub('spam', 'mdeering'), alt: comment.user.name, gravatar: { size: 48 }) %>
+        </p>
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <div class="container">
+          <div class="tile is-ancestor">
+            <div class="tile is-vertical is-3">
+              <div class="tile is-parent is-vertical">
+                <div class="tile is-child ">
+                  <strong><small class="has-text-white is-size-7"><%= comment.name %></small></strong><br/>
+                </div>
+              </div>
+            </div>
+            <div class="tile is-vertical is-7">
+              <div class="tile is-parent is-vertical">
+                <div class="tile is-child">
+                  <small class="has-text-white is-size-7"> <%= time_ago_in_words(comment.created_at) %> ago</small>
+                </div>
+              </div>
+            </div>
+            <div class="tile is-vertical is-2">
+              <div class="tile is-parent is-vertical">
+                <div class="tile is-child">
+                  <% if (user_signed_in? && (current_user.id == comment.user_id)) %>
+                    <%= link_to [comment.whispr, comment], class:  "level-item" , method: :delete, data: { confirm: "Delete comment?" } do %>
+                      <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="has-text-white pad-top"><%= comment.response %></div>
+      </div>
+    </div>
+
+  </article>
+</div>

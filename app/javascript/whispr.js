@@ -1,23 +1,3 @@
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
-
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
-// require("jquery").start()
-// require("jquery_ujs").start()
-
-
-// Uncomment to copy all static images under ../images to the output folder and reference
-// them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
-// or the `imagePath` JavaScript helper below.
-//
-// const images = require.context('../images', true)
-// const imagePath = (name) => images(name, true)
-
 document.addEventListener("turbolinks:load", function() {
 
     var WhisprFiles = {
@@ -65,9 +45,9 @@ document.addEventListener("turbolinks:load", function() {
                 // https://stackoverflow.com/questions/47515232/how-to-set-file-input-value-when-dropping-file-on-page
                 const dropZone = document.getElementById('drop_zone');
                 const target = document.documentElement;
-                const fileInput = document.getElementById('whispr_files_url');
+                const fileInput = document.getElementById('whispr_file_user_whispr');
                 const previewImage = document.getElementById('previewImage');
-                const newWhisprForm = document.getElementById('new_whispr');
+                const newShotForm = document.getElementById('new_whispr');
 
 
                 if (dropZone) {
@@ -87,15 +67,14 @@ document.addEventListener("turbolinks:load", function() {
                         e.preventDefault();
                         dropZone.classList.remove('is-in-dropper');
                         fileInput.files = e.dataTransfer.files;
-                        // if on whispr/id/edit hide preview image on drop
+                        // if on shot/id/edit hide preview image on drop
                         if (previewImage) {
                             previewImage.style.display = 'none';
                         }
-                        // If on whispr/new hide dropzone on drop
-                        if(newWhisprForm) {
+                        // If on shots/new hide dropzone on drop
+                        if(newShotForm) {
                             dropZone.style.display = 'none';
                         }
-                        dropZone.style.display = 'none';
                     }, false);
 
                     // Body specific
@@ -113,14 +92,14 @@ document.addEventListener("turbolinks:load", function() {
             }
         },
         whisprHover() {
-            $('.whispr_files').hover(function() {
+            $('.whispr').hover(function() {
                 $(this).children('.whispr-data').toggleClass('visible');
             });
         }
 
     };
-    WhisprFiles.previewWhisprFile();
-    WhisprFiles.whisprHover();
+    Shots.previewWhispr();
+    Shots.whisprHover();
 
 
 });

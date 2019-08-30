@@ -27,7 +27,6 @@ class WhisprsController < ApplicationController
   # POST /whisprs.json
   def create
     @whispr = current_user.whisprs.build(whispr_params)
-
     respond_to do |format|
       if @whispr.save
         format.html { redirect_to root_path, notice: 'Whispr was successfully created.' }
@@ -71,6 +70,6 @@ class WhisprsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def whispr_params
-      params.require(:whispr).permit(:title, :description, :user_id)
+      params.require(:whispr).permit(:title, :description, :user_id, :whispr_files)
     end
 end
