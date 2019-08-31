@@ -1,6 +1,6 @@
 class WhisprsController < ApplicationController
-  before_action :set_whispr, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_whispr, only: [:show, :edit, :update, :destroy, :vote]
+  before_action :authenticate_user!, except: [:index, :show, :vote]
 
   # GET /whisprs
   # GET /whisprs.json
@@ -59,6 +59,18 @@ class WhisprsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to whisprs_url, notice: 'Whispr was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def vote
+    if request.put?
+      @whispr.liked_by current_user
+    elsif request.delete?
+      @whispr.unliked_by current_user
+    end
+    respond_to do |format|
+      format.html { redirect_back fallback_location: root_path }
+      format.js { render layout:false }
     end
   end
 

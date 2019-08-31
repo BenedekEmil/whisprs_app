@@ -51,7 +51,7 @@
                             <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
                           <% end %>
                           <%= link_to whispr, class: "level-item", method: :delete, data: { confirm: "Are you sure you want to delete this whispr?" } do %>
-                            <span class="icon"><i class="fa fa-trash-o has-text-danger" aria-hidden="true"></i></span>
+                            <span class="icon"><i class="fa fa-trash-o danger-icons" aria-hidden="true"></i></span>
                           <% end %>
                         </nav>
                       <% end %>
@@ -90,15 +90,28 @@
           <section class="coments">
             <nav class="whispr-analytics">
               <div class="level-left">
+                <div class="level-item">
+                  <% if user_signed_in? %>
+                    <% if current_user.liked? whispr %>
+                      <%= link_to vote_whispr_path(whispr), method: :delete  do %>
+                        <span class="icon"><i class="fa fa-heart danger-icons"></i></span>
+                      <% end %>
+                      <small class="is-5 has-text-white"><%= pluralize(whispr.get_likes.size, 'Like') %></small>
+                    <% else %>
+                      <%= link_to vote_whispr_path(whispr) , method: :put do %>
+                        <span class="icon"><i class="fa fa-heart"></i></span>
+                      <% end %>
+                      <small class="is-5 has-text-white"><%= pluralize(whispr.get_likes.size, 'Like') %></small>
+                    <% end %>
+                  <% else %>
+                    <%= link_to 'Log In', new_user_session_path %> <small class="has-text-white"> to leave a like.</small>
+                  <% end %>
+                </div>
                 <div class="level-item comments data">
                   <%= link_to whispr do %>
                     <span class="icon"><i class="fa fa-comment"></i>   </span>
                   <% end %>
                   <small class="is-5 has-text-white"><%=pluralize(whispr.comments.count, 'Comment') %></small>
-                </div>
-                <div class="level-item likes">
-                  <span class="icon"><i class="fa fa-heart"></i></span>
-                  <span class="vote-count"></span>
                 </div>
               </div>
             </nav>
@@ -109,7 +122,7 @@
               <%= render 'comments/form', whispr: whispr  %>
             <% else %>
               <div class="content">
-                <%= link_to 'Log In', new_user_session_path %> <small class="has-text-white">to leave a comment.</small>
+
               </div>
             <% end %>
           </section>

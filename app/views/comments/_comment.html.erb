@@ -30,7 +30,7 @@
                 <div class="tile is-child">
                   <% if (user_signed_in? && (current_user.id == comment.user_id)) %>
                     <%= link_to [comment.whispr, comment], class:  "level-item" , method: :delete, data: { confirm: "Delete comment?" } do %>
-                      <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                      <span class="icon allign-right"><i class="fa fa-trash-o danger-icons" aria-hidden="true"></i></span>
                     <% end %>
                   <% end %>
                 </div>

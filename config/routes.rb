@@ -2,6 +2,11 @@ Rails.application.routes.draw do
 
   resources :whisprs do
     resources :comments
+    match "vote", action: :vote, via: [:put,:delete], on: :member
+    member do
+      put 'like', to: "whisprs#like"
+      put 'unlike', to: "whisprs#unlike"
+    end
   end
 
   devise_for :users, controllers: { registrations: 'registrations' }

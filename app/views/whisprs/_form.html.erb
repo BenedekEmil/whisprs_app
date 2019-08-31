@@ -27,7 +27,7 @@
               <div class="dropper has-text-white" id="drop_zone">
                 Drop image here.
               </div>
-              <%= f.input :whispr_files, as: :hidden, label:false, input_html: { class: "", type: "file" }, wrapper: false, label_html: { class: "field-label" } %>
+              <%= f.input :whispr_files, as: :hidden, label:false, input_html: { value: params[:whispr_file] }, wrapper: false, label_html: { class: "field-label" } %>
           </div>
         </div>
       </div>
