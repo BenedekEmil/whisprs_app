@@ -151,6 +151,9 @@ p {
 .allign-right {
   text-align: right;
 }
+.initially-hidden {
+  display: none;
+}
 
 .notification {
   border-radius: unset;
@@ -177,7 +180,7 @@ p {
   vertical-align: middle;
   display: table-cell;
   height: 260px;
-  width: 200px;
+  width: 300px;
   &.is-dragging::before {
     content: "";
     position: absolute;
@@ -208,5 +211,5 @@ p {
 }
 
 .file-i {
-  visibility: hidden !important;
+  display: none !important;
 }

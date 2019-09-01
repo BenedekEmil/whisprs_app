@@ -66,7 +66,7 @@
                       <div class="tile is-child ">
                         <p class="subtitle is-capitalized">
                           <strong class="has-text-white"><%= whispr.title %></strong>
-                        </p>/<br>
+                        </p><br>
                         <% unless whispr.whispr_files.blank? %>
                           <%= image_tag(whispr.whispr_files_url) %>
                         <% end %>
@@ -87,7 +87,7 @@
 
             </div>
           </div>
-          <section class="coments">
+          <section class="comments">
             <nav class="whispr-analytics">
               <div class="level-left">
                 <div class="level-item">
@@ -104,27 +104,28 @@
                       <small class="is-5 has-text-white"><%= pluralize(whispr.get_likes.size, 'Like') %></small>
                     <% end %>
                   <% else %>
-                    <%= link_to 'Log In', new_user_session_path %> <small class="has-text-white"> to leave a like.</small>
+
                   <% end %>
                 </div>
                 <div class="level-item comments data">
-                  <%= link_to whispr do %>
-                    <span class="icon"><i class="fa fa-comment"></i>   </span>
-                  <% end %>
-                  <small class="is-5 has-text-white"><%=pluralize(whispr.comments.count, 'Comment') %></small>
+                  <% var_id = 'comments_section_' + whispr.id.to_s %>
+                  <a ><span class="icon is-primary" data-unique-id="<%= var_id %>"><i class="fa fa-comment"></i></span></a>
+                  <small class="is-5 has-text-white" id="nr_comments_<%= var_id %>"><%=pluralize(whispr.comments.count, 'Comment') %></small>
                 </div>
               </div>
             </nav>
-            <%= render whispr.comments %>
-            <hr class="is-small"/>
-            <% if user_signed_in? %>
-              <p><small class="is-3 has-text-white">Leave a comment ...</small></p>
-              <%= render 'comments/form', whispr: whispr  %>
-            <% else %>
-              <div class="content">
-
+            <div class="initially-hidden" id="comments_section_<%= whispr.id %>">
+              <div  id="comments_for_whispr_<%= whispr.id %>">
+                <%= render whispr.comments, id: '' %>
               </div>
-            <% end %>
+              <div id="comments_form_<%= whispr.id %>">
+                <% if user_signed_in? %>
+                  <%= render 'comments/form', whispr: whispr%>
+                <% end %>
+              </div>
+            </div>
+
+
           </section>
         </div>
       </article>

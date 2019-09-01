@@ -1,3 +1,4 @@
+<% comment = @comment unless comment %>
 <div class="profile-bg pad-top">
   <article class="media">
     <div class="media-left">
@@ -18,17 +19,39 @@
                 </div>
               </div>
             </div>
-            <div class="tile is-vertical is-7">
+
+            <div class="tile is-vertical is-4">
               <div class="tile is-parent is-vertical">
                 <div class="tile is-child">
                   <small class="has-text-white is-size-7"> <%= time_ago_in_words(comment.created_at) %> ago</small>
                 </div>
               </div>
             </div>
-            <div class="tile is-vertical is-2">
+
+            <div class="tile is-vertical is-4">
               <div class="tile is-parent is-vertical">
                 <div class="tile is-child">
-                  <% if (user_signed_in? && (current_user.id == comment.user_id)) %>
+                  <% if user_signed_in? %>
+                    <% if current_user.liked? comment %>
+                      <%= link_to vote_whispr_comment_path(comment.whispr_id, comment), method: :delete  do %>
+                        <span class="icon"><i class="fa fa-heart danger-icons"></i></span>
+                      <% end %>
+                      <small class="is-5 has-text-white"><%= pluralize(comment.get_likes.size, 'Like') %></small>
+                    <% else %>
+                      <%= link_to vote_whispr_comment_path(comment.whispr,comment) , method: :put do %>
+                        <span class="icon"><i class="fa fa-heart"></i></span>
+                      <% end %>
+                      <small class="is-5 has-text-white"><%= pluralize(comment.get_likes.size, 'Like') %></small>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <div class="tile is-vertical is-1">
+              <div class="tile is-parent is-vertical">
+                <div class="tile is-child">
+                  <% if (user_signed_in? && (current_user.id == comment.user_id || comment.whispr.user == current_user)) %>
                     <%= link_to [comment.whispr, comment], class:  "level-item" , method: :delete, data: { confirm: "Delete comment?" } do %>
                       <span class="icon allign-right"><i class="fa fa-trash-o danger-icons" aria-hidden="true"></i></span>
                     <% end %>
@@ -41,6 +64,5 @@
         <div class="has-text-white pad-top"><%= comment.response %></div>
       </div>
     </div>
-
   </article>
 </div>

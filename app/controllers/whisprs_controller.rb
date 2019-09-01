@@ -1,17 +1,28 @@
 class WhisprsController < ApplicationController
-  before_action :set_whispr, only: [:show, :edit, :update, :destroy, :vote]
+  before_action :set_whispr, only: [:show, :edit, :update, :destroy, :vote, :profile]
   before_action :authenticate_user!, except: [:index, :show, :vote]
 
   # GET /whisprs
   # GET /whisprs.json
   def index
-    @whisprs = Whispr.all.order("created_at DESC")
+    @users = User.all.order("created_at DESC")
+    @whisprs = Whispr.includes(:comments).all.order("created_at DESC")
     @whispr = Whispr.new
   end
 
   # GET /whisprs/1
   # GET /whisprs/1.json
   def show
+  end
+
+  def profile
+    @user = User.find(params[:user_id])
+    @whisprs = Whispr.includes(:comments).where(:user_id => @user.id).order("created_at DESC")
+    @whispr = Whispr.new
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+    end
   end
 
   # GET /whisprs/new
@@ -67,10 +78,6 @@ class WhisprsController < ApplicationController
       @whispr.liked_by current_user
     elsif request.delete?
       @whispr.unliked_by current_user
-    end
-    respond_to do |format|
-      format.html { redirect_back fallback_location: root_path }
-      format.js { render layout:false }
     end
   end
 

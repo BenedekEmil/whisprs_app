@@ -1,0 +1,28 @@
+<% @users.each do |user| %>
+  <% if user != current_user %>
+    <div class="panel-block">
+      <article class="media">
+        <div class="media-left">
+          <figure class="gravatar-img is-32x32">
+            <p class="gravatar-img is-32x32">
+              <%= gravatar_image_tag( user.email, size: 64, alt: user.name, gravatar: { size: 48 } ); %>
+            </p>
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="media content">
+            <div class="media-left">
+              <strong class="has-text-white is-6"><%= user.name %></strong><br />
+              <strong><small class="has-text-white is-7">@<%= user.username %></small></strong><br />
+
+            </div>
+            <div class="media-right">
+              <button class="button is-dark ">Follow</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  <% end %>
+<% end %>

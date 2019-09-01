@@ -2,15 +2,13 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-//= require jquery3
-//= require jquery_ujs
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require("jquery")
 //= require_tree .
 // require("jquery").start()
-// require("jquery_ujs").start()
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -88,16 +86,19 @@ document.addEventListener("turbolinks:load", function() {
                     dropZone.addEventListener('drop', (e) => {
                         e.preventDefault();
                         dropZone.classList.remove('is-in-dropper');
-                        fileInput.files = e.dataTransfer.files;
+                        $('#whispr_files_url').val(e.dataTransfer.files);
+                        $("input[type='file']").prop("files", e.dataTransfer.files);
+                        $('#hidden_field_id').ajaxSend(e.dataTransfer.files);
                         // if on whispr/id/edit hide preview image on drop
                         if (previewImage) {
-                            previewImage.style.display = 'none';
+                            $('#previewImage').css("display", "none");
                         }
                         // If on whispr/new hide dropzone on drop
                         if(newWhisprForm) {
-                            dropZone.style.display = 'none';
+                            $('#drop_zone').css("display", "none");
                         }
-                        dropZone.style.display = 'none';
+                        $('#drop_zone').css("display", "none !important");
+
                     }, false);
 
                     // Body specific

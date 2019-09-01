@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
 
   resources :whisprs do
-    resources :comments
+    get :profile, :to => "whisprs#profile"
+    resources :comments do
+      put 'like', to: "comments#like"
+      put 'unlike', to: "comments#unlike"
+      match "vote", action: :vote, via: [:put,:delete], on: :member
+    end
     match "vote", action: :vote, via: [:put,:delete], on: :member
     member do
       put 'like', to: "whisprs#like"
