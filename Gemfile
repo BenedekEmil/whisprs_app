@@ -31,6 +31,8 @@ gem 'mini_magick'
 gem 'impressionist'
 gem 'gravatar_image_tag'
 gem 'acts_as_votable'
+gem 'pg'
+gem 'figaro'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

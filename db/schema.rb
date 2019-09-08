@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_08_31_075414) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: :cascade do |t|
     t.string "name"
     t.text "response"
@@ -48,9 +51,9 @@ ActiveRecord::Schema.define(version: 2019_08_31_075414) do
 
   create_table "votes", force: :cascade do |t|
     t.string "votable_type"
-    t.integer "votable_id"
+    t.bigint "votable_id"
     t.string "voter_type"
-    t.integer "voter_id"
+    t.bigint "voter_id"
     t.boolean "vote_flag"
     t.string "vote_scope"
     t.integer "vote_weight"
