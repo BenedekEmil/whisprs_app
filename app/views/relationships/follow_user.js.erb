@@ -1,0 +1,4 @@
+$("#follow-button-<%= @user.id %>").text('Unfollow')
+    .attr('class', 'button is-danger')
+    .attr('href', "/<%= @user.username %>/unfollow_user")
+    .attr('id', 'unfollow-button-<%= @user.id %>');

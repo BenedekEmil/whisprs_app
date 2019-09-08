@@ -6,7 +6,14 @@ class WhisprsController < ApplicationController
   # GET /whisprs.json
   def index
     @users = User.all.order("created_at DESC")
-    @whisprs = Whispr.includes(:comments).all.order("created_at DESC")
+    if user_signed_in?
+      following_list = current_user.following
+      following_list << current_user unless following_list.include? current_user
+      @whisprs = Whispr.includes(:comments).of_followed_users(following_list).order("created_at DESC")
+    else
+      @whisprs = Whispr.includes(:comments).all.order("created_at DESC")
+    end
+
     @whispr = Whispr.new
   end
 
@@ -17,7 +24,12 @@ class WhisprsController < ApplicationController
 
   def profile
     @user = User.find(params[:user_id])
-    @whisprs = Whispr.includes(:comments).where(:user_id => @user.id).order("created_at DESC")
+    if user_signed_in?
+      @whisprs = Whispr.includes(:comments).where(:user_id => @user.id).order("created_at DESC")
+    else
+      @whisprs = Whispr.includes(:comments).where(:user_id => @user.id).order("created_at DESC")
+    end
+
     @whispr = Whispr.new
 
     respond_to do |format|

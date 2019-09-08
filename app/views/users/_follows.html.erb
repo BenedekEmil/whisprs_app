@@ -1,6 +1,6 @@
 <% @users.each do |user| %>
   <% if user != current_user %>
-    <div class="panel-block">
+    <div class="panel-block profile-bg">
       <article class="media">
         <div class="media-left">
           <figure class="gravatar-img is-32x32">
@@ -10,19 +10,42 @@
           </figure>
         </div>
         <div class="media-content">
-          <div class="media content">
-            <div class="media-left">
-              <strong class="has-text-white is-6"><%= user.name %></strong><br />
-              <strong><small class="has-text-white is-7">@<%= user.username %></small></strong><br />
+          <div class="container">
+            <div class="tile is-ancestor">
+              <div class="tile is-vertical is-6">
+                <div class="tile is-parent is-vertical">
+                  <div class="tile is-child media-left">
+                    <strong class="has-text-white is-7"><small class="has-text-white is-7"><%= user.name %></small></strong><br />
+                    <strong><small class="has-text-white is-7">@<%= user.username %></small></strong><br />
+                  </div>
+                </div>
+              </div>
 
-            </div>
-            <div class="media-right">
-              <button class="button is-dark ">Follow</button>
+              <div class="tile is-vertical is-6">
+                <div class="tile is-parent is-vertical">
+                  <div class="tile is-child media-right">
+                    <% if user_signed_in? %>
+                      <% if  current_user_is_following(current_user.id, user.id) %>
+                        <%= link_to 'Unfollow', unfollow_user_path(user.username),
+                                    remote: true,
+                                    class: 'button is-danger',
+                                    id: 'unfollow-button-' + user.id.to_s,
+                                    method: :post %>
+                      <% else %>
+                        <%= link_to 'Follow', follow_user_path(user.username),
+                                    remote: true,
+                                    class: 'button is-primary',
+                                    id: 'follow-button-' + user.id.to_s,
+                                    method: :post %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </article>
     </div>
-
   <% end %>
 <% end %>

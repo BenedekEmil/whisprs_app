@@ -1,7 +1,7 @@
 <div class="column is-one-quarter sidebar">
   <nav class="panel is-dark">
     <p class="panel-heading"><strong><%= link_to "Profile", root_path %></strong></p>
-    <div class="panel-block">
+    <div class="panel-block profile-bg">
       <article class="media">
         <div class="media-left">
           <figure class="gravatar-img is-64x64">
@@ -12,7 +12,7 @@
           <div class="content">
             <p class="has-text-white">
               <strong class="has-text-white"><%= current_user.name %></strong><br />
-              <strong><small class="has-text-white">@<%= current_user.username %></small></strong><br />
+              <strong><small class="has-text-white">@<%= current_user.username %></small></strong><br/>
               <small class="has-text-white">Joined <%= time_ago_in_words(current_user.created_at) %> ago</small>
             </p>
           </div>
@@ -30,13 +30,13 @@
         <div class="level-item has-centered-text">
           <div>
             <p class="heading has-text-white"><strong class="has-text-white">Following</strong></p>
-            <p class="title is-6 has-text-white">123</p>
+            <p class="title is-6 has-text-white"><%= current_user.following.count %></p>
           </div>
         </div>
         <div class="level-item has-centered-text">
           <div>
             <p class="heading has-text-white"><strong class="has-text-white">Followers</strong></p>
-            <p class="title is-6 has-text-white">465K</p>
+            <p class="title is-6 has-text-white"><%= current_user.followers.count %></p>
           </div>
         </div>
       </div>
